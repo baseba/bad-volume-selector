@@ -1,21 +1,33 @@
 <script lang="ts">
 let sliderValue = 50;
 let tiltValue = 0;
+let a = 0;
+let s= 0;
 
-function get_gravity_value(tilt) {
-  let grow = (tilt**3)/200;
-  return grow;
+function get_gravity_value(tilt, a) {
+  tilt = tilt/180*Math.PI;
+  a = a/180*Math.PI;
+  return (Math.sin(tilt) * Math.cos(a)) /100 ;
 }
 
+
+
+
+
 setInterval(() => {
-  sliderValue = sliderValue + get_gravity_value(tiltValue);
+  a = get_gravity_value(tiltValue, a);
+  s = s * 0.995 + a;
+  console.log(s);
+  sliderValue = sliderValue + s;
   if (sliderValue >=100) {
+    s = 0;
     sliderValue = 100;
   } else if (sliderValue <= 0) {
+    s = 0;
     sliderValue = 0;
   }
-  console.log(sliderValue);
-}, 50);
+  // console.log(sliderValue);
+}, 5);
 
 </script>
 
